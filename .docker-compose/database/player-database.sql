@@ -1,1 +1,0 @@
--- Player database seed data for integration tests

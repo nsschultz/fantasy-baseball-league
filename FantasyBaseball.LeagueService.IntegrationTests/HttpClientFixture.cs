@@ -1,15 +1,17 @@
 using System;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace FantasyBaseball.PlayerService.IntegrationTests;
+namespace FantasyBaseball.LeagueService.IntegrationTests;
 
 public class HttpClientFixture : IDisposable
 {
+  private readonly WebApplicationFactory<Program> _application;
+
   public HttpClientFixture()
   {
-    var host = Environment.GetEnvironmentVariable("PLAYER_SERVICE_HOST") ?? "localhost";
-    var port = Environment.GetEnvironmentVariable("PLAYER_SERVICE_PORT") ?? "8080";
-    Client = new HttpClient { BaseAddress = new Uri($"http://{host}:{port}") };
+    _application = new WebApplicationFactory<Program>();
+    Client = _application.CreateClient();
   }
 
   public HttpClient Client { get; private set; }
@@ -24,5 +26,6 @@ public class HttpClientFixture : IDisposable
   {
     if (!disposing) return;
     Client.Dispose();
+    _application.Dispose();
   }
 }

@@ -17,9 +17,10 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.3" />
     <PackageReference Include="Microsoft.OpenApi" Version="2.4.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="10.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="FantasyBaseball.LeagueService.UnitTests" />
+    <InternalsVisibleTo Include="FantasyBaseball.LeagueService.IntegrationTests" />
   </ItemGroup>
 </Project>

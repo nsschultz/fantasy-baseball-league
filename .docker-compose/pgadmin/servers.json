@@ -1,9 +1,9 @@
 {
   "Servers": {
     "1": {
-      "Name": "player_database",
+      "Name": "league-database",
       "Group": "Servers",
-      "Host": "player-database",
+      "Host": "league-database",
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",

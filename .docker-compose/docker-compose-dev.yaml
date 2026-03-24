@@ -9,33 +9,21 @@ services:
     command: sleep infinity
     environment:
       - ASPNETCORE_URLS=http://+:8080
-      - PLAYER_SERVICE_HOST=player-service:8080
-      - PLAYER_SERVICE_VERSION=v3
+      - LEAGUE_DATABASE=league_database
+      - LEAGUE_DATABASE_HOST=database
+      - LEAGUE_DATABASE_PASSWORD=postgres
+      - LEAGUE_DATABASE_USER=postgres
+      - POSITION_SERVICE_HOST=mountebank:5555
+      - POSITION_SERVICE_VERSION=v1
       - VERSION=${VERSION_NUMBER}
     ports:
       - "8080:8080"
-  player-service:
-    image: nschultz/fantasy-baseball-player:3.2.1
-    restart: always
-    depends_on:
-      player-database:
-        condition: service_healthy
-    environment:
-      - ASPNETCORE_URLS=http://+:8080
-      - PLAYER_DATABASE=player_database
-      - PLAYER_DATABASE_HOST=player-database
-      - PLAYER_DATABASE_PASSWORD=postgres
-      - PLAYER_DATABASE_USER=postgres
-      - POSITION_SERVICE_HOST=mountebank:5555
-      - POSITION_SERVICE_VERSION=v1
-    ports:
-      - "8081:8080"
-  player-database:
+  database:
     build: database/
     restart: always
     user: postgres
     environment:
-      - POSTGRES_DB=player_database
+      - POSTGRES_DB=league_database
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     healthcheck:
@@ -44,7 +32,7 @@ services:
       timeout: 30s
       retries: 5
     volumes:
-      - league_player_data_volume:/var/lib/postgresql/data
+      - league_data_volume:/var/lib/postgresql/data
   mountebank:
     build: mountebank/
     restart: always
@@ -62,5 +50,5 @@ services:
     volumes:
       - league_pgadmin_volume:/var/lib/pgadmin
 volumes:
-  league_player_data_volume:
+  league_data_volume:
   league_pgadmin_volume:

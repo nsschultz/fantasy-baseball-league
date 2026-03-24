@@ -15,5 +15,6 @@
         "SonarSource.sonarlint-vscode"
       ]
     }
-  }
+  },
+  "postCreateCommand": "dotnet tool install --global dotnet-ef --version 10.0.0"
 }

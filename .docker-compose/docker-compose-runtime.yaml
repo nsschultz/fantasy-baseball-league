@@ -3,34 +3,25 @@ services:
   api:
     build: ../
     restart: always
-    environment:
-      - ASPNETCORE_URLS=http://+:8080
-      - PLAYER_SERVICE_HOST=player-service:8080
-      - PLAYER_SERVICE_VERSION=v3
-    ports:
-      - "8080:8080"
-  player-service:
-    image: nschultz/fantasy-baseball-player:3.2.1
-    restart: always
     depends_on:
-      player-database:
+      database:
         condition: service_healthy
     environment:
       - ASPNETCORE_URLS=http://+:8080
-      - PLAYER_DATABASE=player_database
-      - PLAYER_DATABASE_HOST=player-database
-      - PLAYER_DATABASE_PASSWORD=postgres
-      - PLAYER_DATABASE_USER=postgres
+      - LEAGUE_DATABASE=league_database
+      - LEAGUE_DATABASE_HOST=database
+      - LEAGUE_DATABASE_PASSWORD=postgres
+      - LEAGUE_DATABASE_USER=postgres
       - POSITION_SERVICE_HOST=mountebank:5555
       - POSITION_SERVICE_VERSION=v1
     ports:
-      - "8081:8080"
-  player-database:
+      - "8080:8080"
+  database:
     build: database/
     restart: always
     user: postgres
     environment:
-      - POSTGRES_DB=player_database
+      - POSTGRES_DB=league_database
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     healthcheck:
