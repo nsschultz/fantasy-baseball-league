@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyBaseball.LeagueService", "FantasyBaseball.LeagueService\FantasyBaseball.LeagueService.csproj", "{45589694-4DE4-4C4B-AD89-35C2EF67B908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyBaseball.PlayerService.IntegrationTests", "FantasyBaseball.PlayerService.IntegrationTests\FantasyBaseball.PlayerService.IntegrationTests.csproj", "{947AB753-78F2-4B3E-8B03-BD69C23FC595}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyBaseball.LeagueService.IntegrationTests", "FantasyBaseball.LeagueService.IntegrationTests\FantasyBaseball.LeagueService.IntegrationTests.csproj", "{947AB753-78F2-4B3E-8B03-BD69C23FC595}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyBaseball.LeagueService.UnitTests", "FantasyBaseball.LeagueService.UnitTests\FantasyBaseball.LeagueService.UnitTests.csproj", "{98ADFA8C-12BE-4B22-9E56-C14EC054F3F5}"
 EndProject
