@@ -70,18 +70,7 @@ builder.Services
   // Repos
   .AddScoped<ILeagueRepository, LeagueRepository>()
   // Services
-  // .AddScoped<IAddPlayerService, AddPlayerService>()
-  // .AddSingleton<ICsvFileReaderService, CsvFileReaderService>()
-  // .AddSingleton<ICsvFileWriterService, CsvFileWriterService>()
-  // .AddScoped<IDeletePlayerService, DeletePlayerService>()
-  // .AddSingleton<IGetPlayerEnumMapService, GetPlayerEnumMapService>()
-  // .AddScoped<IGetPlayerService, GetPlayerService>()
-  // .AddSingleton<IGetPositionService, GetPositionService>()
-  // .AddScoped<IGetTeamsService, GetTeamsService>()
-  // .AddScoped<IMergePlayerService, MergePlayerService>()
-  // .AddScoped<IMergeStatsService, MergeStatsService>()
-  // .AddScoped<IUpdatePlayerService, UpdatePlayerService>();
-  ;
+  .AddScoped<IAddLeagueService, AddLeagueService>();
 // Setup Swagger
 builder.Services.AddSwaggerGen(o =>
 {
