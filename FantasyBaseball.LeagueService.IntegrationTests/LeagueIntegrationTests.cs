@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FantasyBaseball.LeagueService.Models;
 using Xunit;
 
 namespace FantasyBaseball.LeagueService.IntegrationTests;
