@@ -1,0 +1,33 @@
+(request, state, logger) => {
+  var b_util  = { "code": "UTIL", "fullName": "Utility"          , "playerType": 1, "sortOrder": 13        , "additionalPositions": [ ]                     };
+  var b_if    = { "code": "IF"  , "fullName": "Infielder"        , "playerType": 1, "sortOrder": 7         , "additionalPositions": [ b_util ]              };
+  var b_cif   = { "code": "CIF" , "fullName": "Corner Infielder" , "playerType": 1, "sortOrder": 5         , "additionalPositions": [ b_if, b_util ]        };
+  var b_mif   = { "code": "MIF" , "fullName": "Middle Infielder" , "playerType": 1, "sortOrder": 6         , "additionalPositions": [ b_if, b_util ]        };
+  var b_c     = { "code": "C"   , "fullName": "Catcher"          , "playerType": 1, "sortOrder": 0         , "additionalPositions": [ b_util ]              };
+  var b_1b    = { "code": "1B"  , "fullName": "First Baseman"    , "playerType": 1, "sortOrder": 1         , "additionalPositions": [ b_cif, b_if, b_util ] };
+  var b_2b    = { "code": "2B"  , "fullName": "Second Baseman"   , "playerType": 1, "sortOrder": 2         , "additionalPositions": [ b_mif, b_if, b_util ] };
+  var b_3b    = { "code": "3B"  , "fullName": "Third Baseman"    , "playerType": 1, "sortOrder": 3         , "additionalPositions": [ b_cif, b_if, b_util ] };
+  var b_ss    = { "code": "SS"  , "fullName": "Shortstop"        , "playerType": 1, "sortOrder": 4         , "additionalPositions": [ b_mif, b_if, b_util ] };
+  var b_of    = { "code": "OF"  , "fullName": "Outfielder"       , "playerType": 1, "sortOrder": 11        , "additionalPositions": [ b_util ]              };
+  var b_lf    = { "code": "LF"  , "fullName": "Left Fielder"     , "playerType": 1, "sortOrder": 8         , "additionalPositions": [ b_of, b_util ]        };
+  var b_cf    = { "code": "CF"  , "fullName": "Center Fielder"   , "playerType": 1, "sortOrder": 9         , "additionalPositions": [ b_of, b_util ]        };
+  var b_rf    = { "code": "RF"  , "fullName": "Right Fielder"    , "playerType": 1, "sortOrder": 10        , "additionalPositions": [ b_of, b_util ]        };
+  var b_dh    = { "code": "DH"  , "fullName": "Designated Hitter", "playerType": 1, "sortOrder": 12        , "additionalPositions": [ b_util ]              };
+  var p_p     = { "code": "P"   , "fullName": "Pitcher"          , "playerType": 2, "sortOrder": 102       , "additionalPositions": [ ]                     };
+  var p_sp    = { "code": "SP"  , "fullName": "Starting Pitcher" , "playerType": 2, "sortOrder": 100       , "additionalPositions": [ p_p ]                 };
+  var p_rp    = { "code": "RP"  , "fullName": "Relief Pitcher"   , "playerType": 2, "sortOrder": 101       , "additionalPositions": [ p_p ]                 };
+  var unknown = { "code": ""    , "fullName": "Unknown"          , "playerType": 0, "sortOrder": 2147483647, "additionalPositions": [ ]                     };
+  var positions = [ b_c, b_1b, b_2b, b_3b, b_ss, b_cif, b_mif, b_if, b_lf, b_cf, b_rf, b_of, b_dh, b_util, p_sp, p_rp, p_p, unknown ];
+  for(var p = 0; p < positions.length; p++) {
+    for(var ap = 0; ap < positions[p].additionalPositions.length; ap++) {
+      positions[p].additionalPositions[ap].additionalPositions = [];
+    }
+  }
+  return {
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    body: JSON.stringify(positions),
+    statusCode: 200
+  };
+}

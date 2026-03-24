@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+      target: ci
+    command: sh /app/.docker-compose/scripts/scan.sh
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - LEAGUE_DATABASE=league_database
+      - LEAGUE_DATABASE_HOST=league-database
+      - LEAGUE_DATABASE_PASSWORD=postgres
+      - LEAGUE_DATABASE_USER=postgres
+      - POSITION_SERVICE_HOST=mountebank:5555
+      - POSITION_SERVICE_VERSION=v1
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - SONAR_TOKEN=${SONAR_TOKEN}
+    volumes:
+      - ../:/app/
+  database:
+    build: database/
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=league_database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+    volumes:
+      - data_volume:/var/lib/postgresql/data
+  mountebank:
+    build: mountebank/
+    restart: always
+volumes:
+  data_volume:

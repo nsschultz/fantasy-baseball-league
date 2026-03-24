@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+      target: ci
+    restart: always
+    command: sleep infinity
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - LEAGUE_DATABASE=league_database
+      - LEAGUE_DATABASE_HOST=database
+      - LEAGUE_DATABASE_PASSWORD=postgres
+      - LEAGUE_DATABASE_USER=postgres
+      - POSITION_SERVICE_HOST=mountebank:5555
+      - POSITION_SERVICE_VERSION=v1
+      - VERSION=${VERSION_NUMBER}
+    ports:
+      - "8080:8080"
+  database:
+    build: database/
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=league_database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+    volumes:
+      - league_data_volume:/var/lib/postgresql/data
+  mountebank:
+    build: mountebank/
+    restart: always
+    ports:
+      - "2525:2525"
+      - "5555:5555"
+  pgadmin:
+    build: pgadmin/
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=SuperSecret
+    ports:
+      - "9000:80"
+    volumes:
+      - league_pgadmin_volume:/var/lib/pgadmin
+volumes:
+  league_data_volume:
+  league_pgadmin_volume:

@@ -1,0 +1,16 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
+  "[html]": { "editor.defaultFormatter": null },
+  "dotnet.defaultSolution": "./fantasy-baseball-league.sln",
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 2,
+  "omnisharp.enableEditorConfigSupport": true,
+  "dotnet.formatting.organizeImportsOnFormat": true,
+  "sonarlint.ls.javaHome": "/usr/lib/jvm/java-21-openjdk-arm64",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "nsschultz",
+    "projectKey": "nsschultz_fantasy-baseball-league"
+  }
+}

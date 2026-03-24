@@ -1,0 +1,30 @@
+{
+  "port": 5555,
+  "protocol": "http",
+  "name": "positions",
+  "defaultResponse": {
+    "statusCode": 400,
+    "body": "Bad Request",
+    "headers": {}
+  },
+  "stubs": [
+    {
+      "responses": [{ "is": { "statusCode": 200, "body": "Healthy" } }],
+      "predicates": [{
+        "equals": {
+          "method": "GET",
+          "path": "/api/health"
+        }
+      }]
+    },
+    {
+      "responses": [{ "inject": "<%- stringify('position-response.ejs') %>" }],
+      "predicates": [{
+        "equals": {
+          "method": "GET",
+          "path": "/api/v1/position"
+        }
+      }]
+    }
+  ]
+}
