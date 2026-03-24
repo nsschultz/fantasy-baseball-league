@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+      target: ci
+    command: sh /app/.docker-compose/scripts/scan.sh
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - PLAYER_SERVICE_HOST=player-service:8080
+      - PLAYER_SERVICE_VERSION=v3
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - SONAR_TOKEN=${SONAR_TOKEN}
+    volumes:
+      - ../:/app/
+  player-service:
+    image: nschultz/fantasy-baseball-player:3.2.1
+    restart: always
+    depends_on:
+      player-database:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - PLAYER_DATABASE=player_database
+      - PLAYER_DATABASE_HOST=player-database
+      - PLAYER_DATABASE_PASSWORD=postgres
+      - PLAYER_DATABASE_USER=postgres
+      - POSITION_SERVICE_HOST=mountebank:5555
+      - POSITION_SERVICE_VERSION=v1
+  player-database:
+    build: database/
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=player_database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+    volumes:
+      - data_volume:/var/lib/postgresql/data
+  mountebank:
+    build: mountebank/
+    restart: always
+volumes:
+  data_volume:

@@ -1,0 +1,28 @@
+# compiled code
+
+**/bin
+**/obj
+out/
+
+# files not needed for build
+
+.deploy/
+.devcontainer/
+.docker-compose/
+.git/
+.vscode/
+.dockerignore
+.gitignore
+Dockerfile
+Jenkinsfile
+LICENSE
+README.md
+version.txt
+
+# scanning data
+
+.sonarqube/
+coverage-hits/
+coverage-results/
+coverage.json
+opencovercoverage.xml

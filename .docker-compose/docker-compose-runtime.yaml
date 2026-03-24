@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  api:
+    build: ../
+    restart: always
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - PLAYER_SERVICE_HOST=player-service:8080
+      - PLAYER_SERVICE_VERSION=v3
+    ports:
+      - "8080:8080"
+  player-service:
+    image: nschultz/fantasy-baseball-player:3.2.1
+    restart: always
+    depends_on:
+      player-database:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - PLAYER_DATABASE=player_database
+      - PLAYER_DATABASE_HOST=player-database
+      - PLAYER_DATABASE_PASSWORD=postgres
+      - PLAYER_DATABASE_USER=postgres
+      - POSITION_SERVICE_HOST=mountebank:5555
+      - POSITION_SERVICE_VERSION=v1
+    ports:
+      - "8081:8080"
+  player-database:
+    build: database/
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=player_database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+    volumes:
+      - data_volume:/var/lib/postgresql/data
+  mountebank:
+    build: mountebank/
+    restart: always
+    ports:
+      - "2525:2525"
+      - "5555:5555"
+  pgadmin:
+    build: pgadmin/
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=SuperSecret
+    ports:
+      - "9000:80"
+    volumes:
+      - pgadmin_volume:/var/lib/pgadmin
+volumes:
+  data_volume:
+  pgadmin_volume:

@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "env": {
+      "SONAR_URL": "http://sonarqube.schultz.local/"
+    }
+  },
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-and-scan",
+      "command": "sh",
+      "type": "process",
+      "args": [".docker-compose/scripts/scan.sh"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "restore",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["restore"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["run", "--project", "${workspaceFolder}/FantasyBaseball.LeagueService/FantasyBaseball.LeagueService.csproj"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "test",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["test"],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
